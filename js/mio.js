@@ -22,9 +22,9 @@ $(document).ready(function(){
     //añado boton para enviar a mi debugger
     
     $(".send-console").click(function(){
-        var code = $(this).prev().html();
-        
-        editAreaLoader.setValue("textarea_1", '<?php '+code+'?>');
+        var code = $(this).prev();
+        code = $('<a />').html(code).text();
+        editAreaLoader.setValue("textarea_1", '<?php '+code);
         $("#code-php-button").click();
         //my_save("",'<?php '+code+'?>');
     });
@@ -52,12 +52,12 @@ $(document).ready(function(){
 	//,start_highlight: true
         ,min_width: "670"
         ,min_height: "170"
-        ,allow_toggle:true
         ,toolbar: " load, save , search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help"
 	,save_callback: "my_save"
         ,load_callback: "my_load"
         ,allow_resize: "x"
-        ,display: "later"
+        ,display: "onload"
+        ,start_highlight: true
     });
 ///fin editor    
     
