@@ -21,18 +21,19 @@
         <?php
         $possible_dir = $_GET["dir"];
         if(!is_dir($possible_dir)) die("Must pass a possible dir to this file");
-        $gsearch = $possible_dir."/*.php";
-        foreach (glob($gsearch) as $file) { //get the directory name and catch de possible slides
-            $aFiles[]=$file;
+        $global_search = $possible_dir."/*.php";
+        foreach (glob($global_search) as $file) { //get the directory name and catch the possible slides
+            $files[]=$file;
         }
-        if(count($aFiles)){
-            natsort($aFiles);
-            foreach($aFiles as $file){
+        if(count($files)){
+            natsort($files);
+            foreach($files as $file){
                 ///the position magic is here
-                $pos_file = str_replace($possible_dir."/","",$file);
-                list($y_position,$x_position,$name,$z_position,$subname) = explode("-",$pos_file);
+                $possible_file = str_replace($possible_dir."/","",$file);
+
+                list($y_position,$x_position,$name,$z_position,$subname) = array_pad(explode("-",$possible_file), 5, null);
                 //$y_position = substr($y_position,7);//removes slides/
-                if($z_position){
+                if(isset($z_position)){
                     $z_position = $z_position*(-1);
                     $name = $name."-".$subname;
                     echo '<div id="'.$name.'" class="step slide" data-x="'.(int)($x_position*1000).'" data-y="'.(int)($y_position*1000).'"  data-z="'.(int)($z_position*1000).'">';
@@ -43,7 +44,7 @@
 
                 include($file);
                 echo '</div>';
-                $aLinks[] = $name;
+                $links[] = $name;
             }
         }else{
             echo "No talks in this directory:".$possible_dir;
@@ -64,7 +65,7 @@
     <div id="list-links">List Links</div>
     <div id="list-links-container" style="display:none">
         <ul>
-            <?php foreach($aLinks as $link): ?>
+            <?php foreach($links as $link): ?>
             <li><a href="#<? echo $link?>"><? echo $link?></a></li>
             <?php endforeach; ?>
         </ul>

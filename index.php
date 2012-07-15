@@ -26,13 +26,13 @@
                 if ($handler = opendir('slides')) {
                     while (false !== ($talks = readdir($handler))) {
                         if ($talks != "." && $talks != "..") {
-                            $aPossibleTalks[]=$talks;
+                            $possible_talks[]=$talks;
                         }
                     }
-                    closedir(handler);
+                    closedir($handler);
                 }
-                natsort($aPossibleTalks);
-                foreach($aPossibleTalks as $talk): ?>
+                natsort($possible_talks);
+                foreach($possible_talks as $talk): ?>
                     <li>
                         <a href="talk.php?dir=<?php echo "slides/".$talk ?>">
                             <?php echo  $talk; //strtolower(preg_replace('/([^A-Z-])([A-Z])/', '$1 $2', $talk)); ?>
